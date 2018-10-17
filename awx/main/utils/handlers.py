@@ -213,6 +213,8 @@ def _encode_payload_for_socket(payload):
         encoded_payload = json.dumps(encoded_payload, ensure_ascii=False)
     if isinstance(encoded_payload, six.text_type):
         encoded_payload = encoded_payload.encode('utf-8')
+    if self.message_type == 'datadog-agent':
+        encoded_payload+= "\n"
     return encoded_payload
 
 
