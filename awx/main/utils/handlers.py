@@ -219,8 +219,9 @@ def _encode_payload_for_socket(payload):
 
 
 class TCPHandler(BaseHandler):
-    def __init__(self, tcp_timeout=5, **kwargs):
+    def __init__(self, tcp_timeout=5, message_type=None, **kwargs):
         self.tcp_timeout = tcp_timeout
+        self.message_type = message_type
         super(TCPHandler, self).__init__(**kwargs)
 
     def _send(self, payload):
@@ -249,7 +250,8 @@ class TCPHandler(BaseHandler):
 class UDPHandler(BaseHandler):
     message = "Cannot determine if UDP messages are received."
 
-    def __init__(self, **kwargs):
+    def __init__(self, message_type=None, **kwargs):
+        self.message_type = message_type
         super(UDPHandler, self).__init__(**kwargs)
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
