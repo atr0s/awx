@@ -213,8 +213,6 @@ def _encode_payload_for_socket(payload):
         encoded_payload = json.dumps(encoded_payload, ensure_ascii=False)
     if isinstance(encoded_payload, six.text_type):
         encoded_payload = encoded_payload.encode('utf-8')
-    if self.message_type == 'datadog-agent':
-        encoded_payload+= "\n"
     return encoded_payload
 
 
@@ -235,6 +233,8 @@ class TCPHandler(BaseHandler):
                 ret = SocketResult(False, "Socket currently busy, failed to send message")
                 logger.warning(ret.reason)
             else:
+                if self.message_type == 'datadog-agent':
+                    payload+="\n"
                 sok.send(payload)
                 ret = SocketResult(True)  # success!
         except Exception as e:
@@ -257,6 +257,8 @@ class UDPHandler(BaseHandler):
 
     def _send(self, payload):
         payload = _encode_payload_for_socket(payload)
+        if self.message_type == 'datadog-agent':
+            payload+="\n"
         self.socket.sendto(payload, (self._get_host(hostname_only=True), self.port or 0))
         return SocketResult(True, reason=self.message)
 
