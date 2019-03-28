@@ -119,7 +119,8 @@ virtualenv_ansible:
 			virtualenv --system-site-packages $(VENV_BASE)/ansible && \
 			$(VENV_BASE)/ansible/bin/pip install $(PIP_OPTIONS) --ignore-installed six packaging appdirs && \
 			$(VENV_BASE)/ansible/bin/pip install $(PIP_OPTIONS) --ignore-installed setuptools==36.0.1 && \
-			$(VENV_BASE)/ansible/bin/pip install $(PIP_OPTIONS) --ignore-installed pip==9.0.1; \
+			$(VENV_BASE)/ansible/bin/pip install $(PIP_OPTIONS) --ignore-installed pip==9.0.1 && \
+			$(VENV_BASE)/ansible/bin/pip install $(PIP_OPTIONS) --ignore-installed datadog==0.28.0; \
 		fi; \
 	fi
 
